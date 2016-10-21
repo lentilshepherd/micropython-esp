@@ -28,13 +28,16 @@ def main():
 
         print()
 
-        # send results to Adafruit IO
+        # construct URL with key and results
         paramstr = "&".join(["{}={}".format(k,v) for k,v in aioparams.items()])
         resultstr = "&".join(["{}{}={}".format(k,uid,v) for k,v in results.items()])
         urlvarstr = "&".join([paramstr, resultstr])
         url = "?".join([aiourlbase, urlvarstr])
         print(url)
-        http_get(url)
+
+        # send results to Adafruit IO
+        response = get(url)
+        print(response.text)
 
         time.sleep_ms(30000)
 

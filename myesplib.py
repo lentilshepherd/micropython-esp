@@ -4,11 +4,11 @@ import time
 import dht
 import machine
 import network
-import socket
 import gc
 import esp
 import json
 import ubinascii
+from urequests import get
 
 # constants
 DHTPIN = 5
@@ -64,22 +64,6 @@ def connect_best(wlan, credentials):
             return connssid
     print("Failed to connect to any wireless network")
 
-def http_get(url):
-    "Function implementing HTTP GET"
-    _, _, host, path = url.split('/', 3)
-    addr = socket.getaddrinfo(host, 80)[0][-1]
-    s = socket.socket()
-    s.connect(addr)
-    s.send(bytes('GET /%s HTTP/1.0\r\nHost: %s\r\n\r\n' % (path, host), 'utf8'))
-    while True:
-        data = s.recv(100)
-        if data:
-            print(str(data, 'utf8'), end='')
-        else:
-            break
-    print()
-    s.close()
-
 def polldht(dht, ledpin = None):
     """Collect measurements from DHT and return in a dictionary.
        If ledpin is specified, turn it on before measurement, and off after.
@@ -98,4 +82,5 @@ def getuid():
     "Return ESP unique ID as a string"
     return ubinascii.hexlify(machine.unique_id()).decode('utf-8')
 
+def ledify(func):
     
