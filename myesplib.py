@@ -8,7 +8,7 @@ import gc
 import esp
 import json
 import ubinascii
-from urequests import get
+import urequests
 
 # constants
 DHTPIN = 5
@@ -81,6 +81,3 @@ def polldht(dht, ledpin = None):
 def getuid():
     "Return ESP unique ID as a string"
     return ubinascii.hexlify(machine.unique_id()).decode('utf-8')
-
-def ledify(func):
-    

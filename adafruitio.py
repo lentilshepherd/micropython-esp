@@ -38,6 +38,7 @@ def main():
         # send results to Adafruit IO
         response = get(url)
         print(response.text)
+        response.close()
 
         time.sleep_ms(30000)
 
